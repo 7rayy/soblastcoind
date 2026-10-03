@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoblastCo Indonesia - Advanced Cleaning & Steel Profiling</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        body {
+            background-color: #000000;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* 
+         * ANIMASI BACKGROUND: Lebih Terang
+         */
+        .bg-canvas-animated {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            background-color: #000000;
+        }
+
+        .bg-canvas-animated::before, .bg-canvas-animated::after {
+            content: "";
+            position: absolute;
+            width: 70vw; height: 70vh;
+            border-radius: 50%;
+            filter: blur(130px);
+            opacity: 0.7;
+            animation: canvasPulse 12s ease-in-out infinite alternate;
+        }
+
+        .bg-canvas-animated::before {
+            background: rgba(14, 165, 233, 0.45); /* Biru Langit Lebih Terang */
+            top: -20%; left: -10%;
+        }
+
+        .bg-canvas-animated::after {
+            background: rgba(37, 99, 235, 0.4); /* Biru Cerah */
+            bottom: -20%; right: -10%;
+            animation-delay: -6s;
+        }
+
+        @keyframes canvasPulse {
+            0% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.15) translate(8%, 5%); }
+            100% { transform: scale(0.95) translate(-5%, -8%); }
+        }
+
+        /* 
+         * EFEK GLASSMORPHISM SELANG-SELING SETIAP SECTION
+         */
+        main > section:nth-child(odd) {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        main > section:nth-child(even) {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .glass-premium {
+            background: linear-gradient(135deg, rgba(30,27,75,0.4) 0%, rgba(15,23,42,0.6) 100%);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        .glass-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border: 1px solid rgba(56, 189, 248, 0.4); 
+            box-shadow: 0 10px 40px rgba(56, 189, 248, 0.15);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #7dd3fc, #3b82f6, #818cf8);
+            background-size: 200% 200%;
+            animation: textGradientMove 4s ease infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @keyframes textGradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .arrow-shape {
+            clip-path: polygon(0% 0%, 92% 0%, 100% 50%, 92% 100%, 0% 100%);
+        }
+
+        /* Teks Animasi yang Selalu Berulang */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        @keyframes fadeInContent {
+            from { opacity: 0; transform: translateX(10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .animate-tab { animation: fadeInContent 0.4s ease-out forwards; }
+
+        .slide-hidden { opacity: 0; pointer-events: none; z-index: 10; transition: opacity 0.8s ease-in-out; }
+        .slide-active { opacity: 1; pointer-events: auto; z-index: 20; transition: opacity 0.8s ease-in-out; }
+        
+        @keyframes progress-load {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: #3b82f6;
+            width: 0%;
+        }
+        .progress-bar-fill.active {
+            animation: progress-load 5s linear forwards;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #000000; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+    </style>
+</head>
+<body class="antialiased selection:bg-blue-500 selection:text-white">
+
+    <div class="bg-canvas-animated"></div>
+
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 glass border-b border-white/10 shadow-lg">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            
+            <a href="#" class="flex items-center gap-3">
+                  <img src="img/00.png.png" alt="SoblastCo Logo" class="h-10 md:h-12 w-auto object-contain hover:opacity-80 transition drop-shadow-md">
+            </a>
+
+            <div class="hidden lg:flex space-x-8 text-sm font-semibold text-gray-300">
+                <a href="#home" class="hover:text-blue-400 transition-colors">Home</a>
+                <a href="#about" class="hover:text-blue-400 transition-colors">About Us</a>
+                <a href="#logistics" class="hover:text-blue-400 transition-colors">Logistics</a>
+                <a href="#our-services" class="hover:text-blue-400 transition-colors">Our Services</a>
+                <a href="#faq" class="hover:text-blue-400 transition-colors">FAQ</a>
+            </div>
+
+            <a href="#contact" class="hidden lg:inline-flex items-center px-6 py-2 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-semibold transition-all shadow-[0_0_15px_rgba(37,99,235,0.5)] border border-blue-400/50">
+                Contact Us
+            </a>
+
+            <button class="lg:hidden text-white p-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <!-- SECTION 1 (Ganjil) -->
+        <section id="home" class="min-h-screen flex items-center pt-32 pb-12 px-6 relative z-10">
+            <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center reveal">
+                
+                <div class="text-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-blue-300 text-xs font-semibold mb-6 border border-blue-500/30 uppercase tracking-widest shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+                        <span class="relative flex h-2 w-2">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                        </span>
+                        Est. 2010 • <span class="counter mx-1" data-target="15">0</span>+ Years Experience
+                    </div>
+                    
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter mb-6 leading-[1.1] drop-shadow-lg">
+                        Advanced <br><span class="text-gradient">Cleaning</span> <br/> & Steel Profiling
+                    </h1>
+                    
+                    <p class="text-lg text-gray-400 mb-10 max-w-lg font-light leading-relaxed">
+                        We provide new steel profiling to Corrosion Institute standard or refurbishing your equipment into the next level. We strive to become the leading partner in cleaning.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#our-services" class="px-8 py-4 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-bold transition-all shadow-[0_0_20px_rgba(37,99,235,0.4)] flex items-center justify-center gap-2">
+                            Explore Services
+                        </a>
+                    </div>
+                </div>
+
+                <div class="relative w-full h-[400px] md:h-[500px] lg:h-[550px] glass p-3 rounded-[2rem] transform hover:scale-[1.01] transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-blue-600/10 to-transparent rounded-[2rem] pointer-events-none"></div>
+                    <img src="img/awl.jpg" alt="Hero Equipment" class="w-full h-full object-cover rounded-[1.5rem] shadow-2xl">
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2 (Genap) -->
+        <section class="py-16 px-6 relative z-10">
+            <div class="max-w-7xl mx-auto text-center reveal">
+                <h4 class="text-sm font-bold text-gray-400 tracking-[0.25em] uppercase mb-10">Trusted by Global Clients</h4>
+                <div class="flex flex-wrap justify-center items-center gap-10 md:gap-20">
+                    <img src="img/h.webp" alt="Leighton" class="h-16 md:h-24 w-auto object-contain transition-transform hover:-translate-y-2 rounded-lg shadow-lg opacity-100">
+                    <img src="img/h.webp" alt="Thiess" class="h-16 md:h-24 w-auto object-contain transition-transform hover:-translate-y-2 rounded-lg shadow-lg opacity-100">
+                    <img src="img/h.webp" alt="Chevron" class="h-16 md:h-24 w-auto object-contain transition-transform hover:-translate-y-2 rounded-lg shadow-lg opacity-100">
+                    <img src="img/h.webp" alt="Halliburton" class="h-16 md:h-24 w-auto object-contain transition-transform hover:-translate-y-2 rounded-lg shadow-lg opacity-100">
+                    <img src="img/h.webp" alt="Transkon" class="h-16 md:h-24 w-auto object-contain transition-transform hover:-translate-y-2 rounded-lg shadow-lg opacity-100">
+                    <img src="img/h.webp" alt="Hino" class="h-16 md:h-24 w-auto object-contain transition-transform hover:-translate-y-2 rounded-lg shadow-lg opacity-100">
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3 (Ganjil) -->
+        <section id="about" class="py-32 px-6 relative z-10">
+            <div class="max-w-7xl mx-auto mb-16 text-center reveal">
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-4 tracking-tight">Company <span class="text-gradient">Journey</span></h2>
+                <p class="text-gray-400 text-lg font-light max-w-2xl mx-auto">Discover our history and the awards that made us who we are today.</p>
+            </div>
+            
+            <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-start reveal">
+                <div class="md:col-span-4 flex flex-col space-y-4">
+                    <button onclick="switchTab('established')" id="btn-established" class="tab-btn arrow-shape w-full text-left font-bold text-lg px-8 py-5 transition-all duration-300 bg-indigo-900 text-white shadow-[0_0_25px_rgba(49,46,129,0.8)] border border-indigo-500/50">
+                        Established
+                    </button>
+                    <button onclick="switchTab('award')" id="btn-award" class="tab-btn arrow-shape w-full text-left font-bold text-lg px-8 py-5 transition-all duration-300 glass text-gray-400 hover:text-white hover:bg-white/10">
+                        Our Award
+                    </button>
+                    <button onclick="switchTab('history')" id="btn-history" class="tab-btn arrow-shape w-full text-left font-bold text-lg px-8 py-5 transition-all duration-300 glass text-gray-400 hover:text-white hover:bg-white/10">
+                        Company History
+                    </button>
+                </div>
+
+                <div class="md:col-span-8 glass p-8 md:p-12 rounded-[2rem] min-h-[350px] flex items-center relative overflow-hidden border border-indigo-500/20">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 blur-[80px] rounded-full pointer-events-none"></div>
+
+                    <div id="content-established" class="tab-content w-full animate-tab">
+                        <h3 class="text-3xl font-bold text-white mb-6 flex items-center gap-4">
+                            <span class="w-10 h-10 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400 text-sm border border-indigo-500/30">✦</span>
+                            Established in 2010
+                        </h3>
+                        <p class="text-gray-300 text-lg leading-relaxed font-light mb-6">
+                            SCI was established in Indonesia in 2010 to fulfill the market demands of surface preparation company in mining, oil, gas and construction.
+                        </p>
+                        <p class="text-gray-300 text-lg leading-relaxed font-light">
+                            Originated from Houston, Texas, USA, the Sodablast Systems planned expansion in Indonesia through SCI. Located in Surabaya, SCI head office provide services ranged from cleaning and paint removal, pre-coating preparation, and restoration for multiple type of surface.
+                        </p>
+                    </div>
+
+                    <div id="content-award" class="tab-content w-full hidden animate-tab">
+                        <h3 class="text-3xl font-bold text-white mb-6 flex items-center gap-4">
+                            <span class="w-10 h-10 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400 text-sm border border-indigo-500/30">✦</span>
+                            Dustless Blasting Award (2012)
+                        </h3>
+                        <p class="text-gray-300 text-lg leading-relaxed font-light mb-6">
+                            Within the improvement of the technology, surface preparation process requires both environmentally friendly and safety. SCI is very aware to this situation.
+                        </p>
+                        <p class="text-gray-300 text-lg leading-relaxed font-light">
+                            In January 2012, SCI was awarded the distributorship of Dustless Blasting, which is being used widely and very popular in the surface preparation industry.
+                        </p>
+                    </div>
+
+                    <div id="content-history" class="tab-content w-full hidden animate-tab">
+                        <h3 class="text-3xl font-bold text-white mb-6 flex items-center gap-4">
+                            <span class="w-10 h-10 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400 text-sm border border-indigo-500/30">✦</span>
+                            Introducing IBIX Pro Series (2014)
+                        </h3>
+                        <p class="text-gray-300 text-lg leading-relaxed font-light mb-6">
+                            Following our initial success and adapting to market needs, we expanded our technological solutions.
+                        </p>
+                        <p class="text-gray-300 text-lg leading-relaxed font-light">
+                            Later in 2014, with demands of low maintenance and ease of mobility, SCI was introduced to IBIX pro series. A simple and robust Italian machine that has better safety and features than other surface preparation equipment, low cost maintenance and easy to transport.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4 (Genap) -->
+        <section id="logistics" class="py-32 px-6 relative z-10">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center flex-row-reverse lg:flex-row reveal">
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">Comprehensive <br><span class="text-gradient">Logistics Service</span></h2>
+                    <p class="text-gray-400 text-lg mb-8 leading-relaxed font-light">
+                        Our logistics company offers a diverse range of services tailored to meet the unique needs of each client. From warehousing and distribution to transportation management and supply.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                        <div class="flex items-center gap-3 text-gray-300 glass px-5 py-4 rounded-xl border border-white/5 hover:border-blue-500/30 transition-colors"><svg class="w-5 h-5 text-blue-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Less Than Truckload</div>
+                        <div class="flex items-center gap-3 text-gray-300 glass px-5 py-4 rounded-xl border border-white/5 hover:border-blue-500/30 transition-colors"><svg class="w-5 h-5 text-blue-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Rail Freight Shipping</div>
+                        <div class="flex items-center gap-3 text-gray-300 glass px-5 py-4 rounded-xl border border-white/5 hover:border-blue-500/30 transition-colors"><svg class="w-5 h-5 text-blue-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Hot Shot Trucking</div>
+                        <div class="flex items-center gap-3 text-gray-300 glass px-5 py-4 rounded-xl border border-white/5 hover:border-blue-500/30 transition-colors"><svg class="w-5 h-5 text-blue-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Freight Forwarding</div>
+                        <div class="flex items-center gap-3 text-gray-300 glass px-5 py-4 rounded-xl border border-white/5 hover:border-blue-500/30 transition-colors"><svg class="w-5 h-5 text-blue-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Container Freight</div>
+                    </div>
+                </div>
+
+                <div class="relative w-full h-[500px] glass p-3 rounded-[2.5rem]">
+                    <img src="img/l.jpeg" alt="Logistics Service" class="w-full h-full object-cover rounded-[2rem]">
+                    
+                    <div class="absolute top-10 -left-6 glass p-6 rounded-3xl text-center flex flex-col justify-center items-center border border-blue-400/30 shadow-[0_0_20px_rgba(56,189,248,0.2)]">
+                        <span class="text-4xl font-black text-white mb-1"><span class="counter" data-target="150">0</span>K</span>
+                        <span class="text-gray-400 text-xs font-bold uppercase tracking-wider">Product Delivery</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 5 (Ganjil) - SEKARANG MENJADI OUR SERVICES -->
+        <section id="our-services" class="py-32 px-6 relative z-10">
+            <div class="max-w-7xl mx-auto reveal">
+                <div class="mb-16 md:mb-24 flex flex-col md:flex-row justify-between items-end gap-6">
+                    <div>
+                        <!-- Judul dan deskripsi disesuaikan dengan Our Services -->
+                        <h2 class="text-4xl md:text-6xl font-extrabold mb-4">Our <br><span class="text-gradient">Services</span></h2>
+                        <p class="text-gray-400 max-w-xl text-lg font-light">Here are some examples of our specialized services designed for mine support and heavy maintenance vehicles. Built to withstand extreme conditions.</p>
+                    </div>
+                    <div class="hidden lg:flex gap-4 mb-4 z-30" id="carousel-thumbnails">
+                        <div class="w-24 h-20 rounded-xl overflow-hidden cursor-pointer border-2 transition-all thumb-item border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.5)]" onclick="goToSlide(0)">
+                            <img src="img/tr1.jpg" class="w-full h-full object-cover">
+                        </div>
+                        <div class="w-24 h-20 rounded-xl overflow-hidden cursor-pointer border-2 transition-all thumb-item border-transparent hover:border-white/30 opacity-50" onclick="goToSlide(1)">
+                            <img src="img/tr2.jpg" class="w-full h-full object-cover">
+                        </div>
+                        <div class="w-24 h-20 rounded-xl overflow-hidden cursor-pointer border-2 transition-all thumb-item border-transparent hover:border-white/30 opacity-50" onclick="goToSlide(2)">
+                            <img src="img/tr3.jpeg" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative w-full h-[650px] lg:h-[550px] rounded-[2rem]">
+                    
+                    <div class="product-slide slide-active absolute inset-0 w-full h-full" id="slide-0">
+                        <div class="w-full lg:w-[75%] h-[400px] lg:h-[500px] rounded-[2rem] overflow-hidden relative shadow-2xl">
+                            <div class="absolute inset-0 bg-gradient-to-r from-transparent to-black/50 z-10"></div>
+                            <img src="img/tr1.jpg" alt="MC3009" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-1000">
+                        </div>
+                        <div class="absolute bottom-0 right-0 lg:-bottom-6 lg:right-6 w-[95%] lg:w-[45%] glass-premium p-8 md:p-12 rounded-[2rem] z-20">
+                            <div class="w-12 h-1 mb-6 bg-blue-500 rounded-full"></div>
+                            <h3 class="text-3xl font-extrabold text-white mb-4">Heavy Duty Wheel Chocks <br>MC3009</h3>
+                            <p class="text-gray-300 text-lg leading-relaxed font-light mb-8">
+                                Engineered specifically for mine support equipment such as lubrication trucks and heavy maintenance vehicles. Unmatched extreme durability in harsh environments.
+                            </p>
+                            <a href="#" class="inline-flex items-center gap-3 px-8 py-4 rounded-full border border-blue-400/50 hover:bg-blue-600/20 text-white font-bold transition-all group">
+                                Learn More 
+                                <span class="w-8 h-8 rounded-full border border-white flex items-center justify-center group-hover:bg-white group-hover:text-blue-900 transition-colors">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="product-slide slide-hidden absolute inset-0 w-full h-full" id="slide-1">
+                        <div class="w-full lg:w-[75%] h-[400px] lg:h-[500px] rounded-[2rem] overflow-hidden relative shadow-2xl">
+                            <div class="absolute inset-0 bg-gradient-to-r from-transparent to-black/50 z-10"></div>
+                            <img src="img/tr2.jpg" alt="MC3010" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-1000">
+                        </div>
+                        <div class="absolute bottom-0 right-0 lg:-bottom-6 lg:right-6 w-[95%] lg:w-[45%] glass-premium p-8 md:p-12 rounded-[2rem] z-20">
+                            <div class="w-12 h-1 mb-6 bg-indigo-500 rounded-full"></div>
+                            <h3 class="text-3xl font-extrabold text-white mb-4">Heavy Duty Wheel Chocks <br>MC3010</h3>
+                            <p class="text-gray-300 text-lg leading-relaxed font-light mb-8">
+                                Manufactured with highly durable, lightweight materials specifically designed for rapid ground deployment without sacrificing structural integrity.
+                            </p>
+                            <a href="#" class="inline-flex items-center gap-3 px-8 py-4 rounded-full border border-indigo-400/50 hover:bg-indigo-600/20 text-white font-bold transition-all group">
+                                Learn More 
+                                <span class="w-8 h-8 rounded-full border border-white flex items-center justify-center group-hover:bg-white group-hover:text-indigo-900 transition-colors">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="product-slide slide-hidden absolute inset-0 w-full h-full" id="slide-2">
+                        <div class="w-full lg:w-[75%] h-[400px] lg:h-[500px] rounded-[2rem] overflow-hidden relative shadow-2xl">
+                            <div class="absolute inset-0 bg-gradient-to-r from-transparent to-black/50 z-10"></div>
+                            <img src="img/tr3.jpeg" alt="MC3011" class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-1000">
+                        </div>
+                        <div class="absolute bottom-0 right-0 lg:-bottom-6 lg:right-6 w-[95%] lg:w-[45%] glass-premium p-8 md:p-12 rounded-[2rem] z-20">
+                            <div class="w-12 h-1 mb-6 bg-sky-500 rounded-full"></div>
+                            <h3 class="text-3xl font-extrabold text-white mb-4">Heavy Duty Wheel Chocks <br>MC3011</h3>
+                            <p class="text-gray-300 text-lg leading-relaxed font-light mb-8">
+                                The Checkers™ heavy-duty MC3011 wheel chocks weigh only 32 lbs, making them 24% lighter than the industry standard while maintaining max hold capacity.
+                            </p>
+                            <a href="#" class="inline-flex items-center gap-3 px-8 py-4 rounded-full border border-sky-400/50 hover:bg-sky-600/20 text-white font-bold transition-all group">
+                                Learn More 
+                                <span class="w-8 h-8 rounded-full border border-white flex items-center justify-center group-hover:bg-white group-hover:text-sky-900 transition-colors">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-center mt-12 gap-4">
+                    <div class="w-16 h-1.5 bg-white/10 rounded-full overflow-hidden cursor-pointer" onclick="goToSlide(0)">
+                        <div class="progress-bar-fill active" id="prog-0"></div>
+                    </div>
+                    <div class="w-16 h-1.5 bg-white/10 rounded-full overflow-hidden cursor-pointer" onclick="goToSlide(1)">
+                        <div class="progress-bar-fill" id="prog-1"></div>
+                    </div>
+                    <div class="w-16 h-1.5 bg-white/10 rounded-full overflow-hidden cursor-pointer" onclick="goToSlide(2)">
+                        <div class="progress-bar-fill" id="prog-2"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6 (Genap) -->
+        <section id="faq" class="py-32 px-6 relative z-10">
+            <div class="max-w-4xl mx-auto reveal">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-extrabold mb-4">Have any <span class="text-gradient">Questions?</span></h2>
+                    <p class="text-gray-400 font-light">Frequently asked questions regarding our services and operations.</p>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="glass glass-card p-8 rounded-3xl cursor-pointer group">
+                        <h4 class="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">What specific services do you offer?</h4>
+                        <p class="text-gray-400 leading-relaxed font-light">We specialize in cleaning, paint removal, coating (painting), new fabrication, and servicing of equipment on construction sites, mine sites, and oil rigs.</p>
+                    </div>
+                    <div class="glass glass-card p-8 rounded-3xl cursor-pointer group">
+                        <h4 class="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">Do you provide full-time global supply solutions?</h4>
+                        <p class="text-gray-400 leading-relaxed font-light">Yes, our logistics division offers a diverse range of services tailored to meet unique needs, including less than truckload, rail freight, and freight forwarding.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 7 (Ganjil) -->
+        <section id="contact" class="pt-32 pb-10 px-6 relative z-10">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 mb-24 reveal">
+                <div>
+                    <h2 class="text-5xl md:text-6xl font-extrabold mb-8 tracking-tight">Get in <span class="text-gradient">Touch</span></h2>
+                    <p class="text-gray-400 text-lg mb-12 max-w-md font-light">Ready to elevate your equipment maintenance? Contact our dedicated team for inquiries.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-5 p-5 glass rounded-2xl border border-white/5 hover:border-blue-500/30 transition-colors">
+                            <div class="w-12 h-12 rounded-full bg-blue-600/20 flex items-center justify-center shrink-0 border border-blue-500/30">
+                                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path></svg>
+                            </div>
+                            <div>
+                                <h5 class="text-white font-bold mb-1">Head Office</h5>
+                                <p class="text-gray-400 text-sm">Jalan I Gusti Ngurah Rai Blok A1 No 6<br>Surabaya, Jawa Timur 60294</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-5 p-5 glass rounded-2xl border border-white/5 hover:border-blue-500/30 transition-colors">
+                            <div class="w-12 h-12 rounded-full bg-blue-600/20 flex items-center justify-center shrink-0 border border-blue-500/30">
+                                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            </div>
+                            <div>
+                                <h5 class="text-white font-bold mb-1">Email Us</h5>
+                                <p class="text-gray-400 text-sm">info@soblastco-indonesia.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-premium p-10 rounded-[2.5rem] relative overflow-hidden">
+                    <h3 class="text-2xl font-bold text-white mb-8 relative z-10">Send us a Message</h3>
+                    <form class="flex flex-col gap-5 relative z-10">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <input type="text" placeholder="Your Name" class="w-full bg-black/40 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-blue-500 transition-colors backdrop-blur-md">
+                            <input type="email" placeholder="Email Address" class="w-full bg-black/40 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-blue-500 transition-colors backdrop-blur-md">
+                        </div>
+                        <input type="text" placeholder="Subject" class="w-full bg-black/40 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-none focus:border-blue-500 transition-colors backdrop-blur-md">
+                        <textarea rows="4" placeholder="Write your message here..." class="w-full bg-black/40 border border-white/10 rounded-xl px-5 py-4 text-white resize-none focus:outline-none focus:border-blue-500 transition-colors backdrop-blur-md"></textarea>
+                        <button type="submit" class="w-full py-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-lg transition-all mt-2 shadow-[0_0_20px_rgba(37,99,235,0.4)]">
+                            Submit Inquiry
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto border-t border-white/10 pt-10 flex flex-col md:flex-row justify-between items-center gap-6 reveal">
+                <img src="img/00.png.png" alt="Footer Logo" class="h-12 w-auto object-contain opacity-80 hover:opacity-100 transition">
+                <p class="text-gray-500 text-sm font-light tracking-wide">© Copyright 2026. araya@Soblastco-Indonesia. All Rights Reserved.</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // 1. Company Journey Tab Logic
+        function switchTab(tabId) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(el => el.classList.add('hidden'));
+            
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(el => {
+                el.classList.remove('bg-indigo-900', 'text-white', 'shadow-[0_0_25px_rgba(49,46,129,0.8)]', 'border-indigo-500/50');
+                el.classList.add('glass', 'text-gray-400', 'hover:bg-white/10');
+            });
+            
+            document.getElementById('content-' + tabId).classList.remove('hidden');
+            
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.classList.remove('glass', 'text-gray-400', 'hover:bg-white/10');
+            activeBtn.classList.add('bg-indigo-900', 'text-white', 'shadow-[0_0_25px_rgba(49,46,129,0.8)]', 'border-indigo-500/50');
+        }
+
+        // 2. Product Carousel Logic
+        let currentSlide = 0;
+        const totalSlides = 3;
+        let slideInterval;
+
+        function updateSliderUI() {
+            document.querySelectorAll('.product-slide').forEach((slide, index) => {
+                if(index === currentSlide) {
+                    slide.classList.remove('slide-hidden');
+                    slide.classList.add('slide-active');
+                } else {
+                    slide.classList.remove('slide-active');
+                    slide.classList.add('slide-hidden');
+                }
+            });
+
+            document.querySelectorAll('.thumb-item').forEach((thumb, index) => {
+                if(index === currentSlide) {
+                    thumb.classList.remove('border-transparent', 'opacity-50');
+                    thumb.classList.add('border-blue-500', 'shadow-[0_0_15px_rgba(59,130,246,0.5)]', 'opacity-100');
+                } else {
+                    thumb.classList.remove('border-blue-500', 'shadow-[0_0_15px_rgba(59,130,246,0.5)]', 'opacity-100');
+                    thumb.classList.add('border-transparent', 'opacity-50');
+                }
+            });
+
+            document.querySelectorAll('.progress-bar-fill').forEach((bar, index) => {
+                bar.classList.remove('active');
+                void bar.offsetWidth; 
+                if(index === currentSlide) {
+                    bar.classList.add('active');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSliderUI();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSliderUI();
+            resetInterval();
+        }
+
+        function resetInterval() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(nextSlide, 5000); 
+        }
+
+        // 3. Scroll Reveal & Numbers (REPEAT ON SCROLL LOGIC)
+        document.addEventListener("DOMContentLoaded", () => {
+            resetInterval();
+            updateSliderUI();
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        // KETIKA MASUK VIEWPORT (Jalankan Animasi Teks & Angka)
+                        entry.target.classList.add("active");
+                        
+                        const counters = entry.target.querySelectorAll('.counter');
+                        counters.forEach(counter => {
+                            if (!counter.classList.contains('counted')) {
+                                counter.classList.add('counted');
+                                const target = +counter.getAttribute('data-target');
+                                const duration = 2000;
+                                const step = target / (duration / 16);
+                                let current = 0;
+                                
+                                const updateCounter = () => {
+                                    current += step;
+                                    if (current < target) {
+                                        counter.innerText = Math.ceil(current);
+                                        counter.animationId = requestAnimationFrame(updateCounter);
+                                    } else {
+                                        counter.innerText = target;
+                                    }
+                                };
+                                updateCounter();
+                            }
+                        });
+                    } else {
+                        // KETIKA KELUAR VIEWPORT (Reset Animasi agar diulang saat muncul lagi)
+                        entry.target.classList.remove("active");
+                        
+                        const counters = entry.target.querySelectorAll('.counter');
+                        counters.forEach(counter => {
+                            counter.classList.remove('counted');
+                            counter.innerText = "0";
+                            if (counter.animationId) {
+                                cancelAnimationFrame(counter.animationId); // Hentikan animasi angka yang belum selesai
+                            }
+                        });
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            // Pantau semua div yang memiliki class 'reveal'
+            document.querySelectorAll(".reveal").forEach((el) => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
